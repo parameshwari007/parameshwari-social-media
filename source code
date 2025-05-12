@@ -1,0 +1,32 @@
+import pickle
+
+
+# Load the trained model and vectorizer
+with open('sentiment_model.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
+
+
+with open('vectorizer.pkl', 'rb') as vec_file:
+    vectorizer = pickle.load(vec_file)
+
+
+# Function to predict sentiment of a given text
+def predict_sentiment(text):
+    # Transform the text using the loaded vectorizer
+    text_vectorized = vectorizer.transform([text])
+   
+    # Predict the sentiment using the loaded model
+    prediction = model.predict(text_vectorized)
+   
+    # Return sentiment
+    return "Positive" if prediction == 1 else "Negative"
+
+
+# Test the model with some example text
+text_input = "I love this!"
+predicted_sentiment = predict_sentiment(text_input)
+
+
+# Output the result
+print(f"Input Text: {text_input}")
+print(f"Predicted Sentiment: {predicted_sentiment}")
